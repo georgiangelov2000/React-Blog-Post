@@ -30,7 +30,7 @@ const Posts = () => {
         key={id} 
         id={x.id} 
         title={x.title} 
-        content={x.content} 
+        content={x.content.substring(1,1000)} 
         />
       ))}
     </div>
