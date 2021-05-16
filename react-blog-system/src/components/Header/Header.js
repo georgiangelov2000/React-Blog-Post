@@ -3,6 +3,7 @@ import { Menu } from 'antd';
 import { Link } from "@reach/router";
 const { Item } = Menu;
 
+
 const Header = () => {
   return (
     <div className="app_main_navigation">
@@ -20,6 +21,18 @@ const Header = () => {
           <Item key="create_post">
             <Link to="/create_post" style={{ float: "right" }}>
               Create Post
+            </Link>
+          </Item>
+
+          <Item key="sign_up">
+            <Link to="/sign_up" style={{ float: "right" }}>
+              Sign up
+            </Link>
+          </Item>
+
+          <Item key="sign_in">
+            <Link to="/sign_in" style={{ float: "right" }}>
+              Sign up
             </Link>
           </Item>
         
