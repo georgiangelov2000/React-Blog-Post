@@ -45,7 +45,7 @@ const SignIn = () => {
           </div>
 
           <div className="post_input">
-            <Input placeholder="Email" onChange={onEmailChange} />
+            <Input placeholder="email:angelov2000@abv.bg" onChange={onEmailChange} />
           </div>
         </div>
 
@@ -56,7 +56,7 @@ const SignIn = () => {
 
           <div className="post_input">
             <Input.Password
-              placeholder="Password"
+              placeholder="password:angelov2000"
               onChange={onPasswordChange}
             />
           </div>
