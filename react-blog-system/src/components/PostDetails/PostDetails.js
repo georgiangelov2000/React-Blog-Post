@@ -6,23 +6,23 @@ const PostDetails = (props) => {
     const [content,setContent]=useState('');
 
     useEffect(() =>{
-        const postsRef = db
+        let postRef=db
         .collection('posts')
         .doc(props.id)
 
-        postsRef
+        postRef
         .get()
         .then(doc=>{
             let {content,title}=doc.data;
             setTitle(title)
             setContent(content)
         })
-    })
+    },[])
 
     return (
     <div>
-      <p>Title":{title}</p>
-      <p>Content:{content}</p>
+      <p>Title: {title}</p>
+      <p>Content: {content}</p>
     </div>
   );
 };

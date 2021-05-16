@@ -6,10 +6,10 @@ import {Route,Switch} from 'react-router-dom';
 function App() {
   return (
     <div className="App">
-      <CreatePost />
       <Switch>
-        <Route to="/posts" component={Posts} />
-        <Route to="/post/:id" component={PostDetails} />
+        <Route path="/" exact component={CreatePost} />
+        <Route path="/posts" component={Posts} />
+        <Route path="/post/:id" component={PostDetails} />
       </Switch>
     </div>
   );

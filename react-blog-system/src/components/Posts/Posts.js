@@ -8,10 +8,11 @@ const Posts = () => {
   useEffect(() => {
     const postsRef = db.collection("posts");
 
-    postsRef.get().then((posts) => {
+    postsRef
+    .get()
+    .then(posts => {
       posts.forEach((post) => {
         const data = post.data();
-
         const { id } = post;
 
         let payload = {
@@ -26,11 +27,11 @@ const Posts = () => {
   return (
     <div>
       {posts.map((x, id) => (
-        <Post 
-        key={id} 
-        id={x.id} 
-        title={x.title} 
-        content={x.content.substring(1,1000)} 
+        <Post
+          key={id}
+          id={x.id}
+          title={x.title}
+          content={x.content.substring(1, 1000)}
         />
       ))}
     </div>

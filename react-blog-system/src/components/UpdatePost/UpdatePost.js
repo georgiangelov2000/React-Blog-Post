@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import db from "../../firebase";
 
 
-export const CreatePost = ({ history }) => {
+export const UpdatePost = ({ history }) => {
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
 
@@ -21,11 +21,8 @@ export const CreatePost = ({ history }) => {
     postRef
       .add(postObject)
       .then((doc) => {
-        console.log("Document succesfully written!" + doc.id);
+        console.log("Document succesfully written!" , doc.id);
       })
-      .catch((error) => {
-        console.log(error.message);
-      });
     setTitle("");
     setContent("");
     history.push("/posts");
@@ -53,4 +50,4 @@ export const CreatePost = ({ history }) => {
   );
 };
 
-export default CreatePost;
+export default UpdatePost;
