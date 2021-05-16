@@ -9,10 +9,10 @@ import Header from "./components/Header/Header";
 
 function App() {
   return (
-    <div className="App">
+    <div className="app_container">
       <Header />
       <Router>
-        <Posts path="posts" />
+        <Posts default path="posts" />
         <PostDetails path="post/:id" />
         <CreatePost path="create_post" />
         <UpdatePost path="update_post/:id" />

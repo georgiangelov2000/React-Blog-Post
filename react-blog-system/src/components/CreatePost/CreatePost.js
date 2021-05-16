@@ -1,22 +1,19 @@
-import React, { useState } from "react";
-import { navigate } from "@reach/router"
+import { navigate } from "@reach/router";
 import db from "../../firebase";
+import React, { useState } from "react";
+import { PageHeader, Input, Button } from "antd";
+const { TextArea } = Input;
 
 
 export const CreatePost = () => {
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
 
-  const onTitleChange = (event) => {
-    setTitle(event.target.value);
-  };
+  const onTitleChange = (event) => setTitle(event.target.value);
+  const onContentChange = (event) => setContent(event.target.value);
 
-  const onContentChange = (event) => {
-    setContent(event.target.value);
-  };
-  const onSubmit = (e) => {
-    e.preventDefault();
-    let postRef = db.collection("posts");
+  const onCreatePost = () => {
+    const postRef = db.collection("posts");
     const postObject = { title, content };
 
     postRef
@@ -29,27 +26,51 @@ export const CreatePost = () => {
       });
     setTitle("");
     setContent("");
-    navigate(`/posts`)
+    navigate(`/posts`);
   };
 
   return (
-    <div>
-      <form onSubmit={onSubmit}>
-        <h1>Create Post</h1>
-        <input
-          type="text"
-          name="postTitle"
-          value={title}
-          onChange={onTitleChange}
+    <div className="create_post_container">
+      <div className="page_header_container">
+        <PageHeader
+          style={{
+            border: "1px solid rgb(235, 237, 240)",
+          }}
+          title="Create Post"
         />
-        <input
-          type="text"
-          name="postContent"
-          value={content}
-          onChange={onContentChange}
-        />
-        <input type="submit" value="submit" />
-      </form>
+      </div>
+
+      <div className="post_inputs_container">
+        <div className="post_input_container">
+          <div className="post_input_title">
+            <h2>Post Title</h2>
+          </div>
+
+          <div className="post_input">
+            <Input
+              placeholder="Post title"
+              value={title}
+              onChange={onTitleChange}
+            />
+          </div>
+        </div>
+
+        <div className="post_input_container">
+          <div className="post_input_title">
+            <h2>Post Content</h2>
+          </div>
+
+          <div className="post_input">
+            <TextArea rows={10} value={content} onChange={onContentChange} />
+          </div>
+        </div>
+
+        <div className="post_input_button">
+          <Button type="primary" size="large" onClick={onCreatePost}>
+            Create Post
+          </Button>
+        </div>
+      </div>
     </div>
   );
 };

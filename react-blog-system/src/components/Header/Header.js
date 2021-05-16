@@ -5,7 +5,7 @@ const { Item } = Menu;
 
 const Header = () => {
   return (
-    <div>
+    <div className="app_main_navigation">
       {" "}
       <Menu mode="horizontal">
         <Item key="posts">

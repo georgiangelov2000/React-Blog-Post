@@ -1,6 +1,9 @@
 import React, { useState, useEffect } from "react";
-import db from "../../firebase";
 import Post from "../Post/Post";
+import { PageHeader } from 'antd';
+import db from "../../firebase";
+import _ from 'lodash'
+
 
 const Posts = () => {
   const [posts, setPosts] = useState([]);
@@ -24,8 +27,16 @@ const Posts = () => {
 
   return (
     <div className="posts_container">
+      <div className="page_header_container">
+        <PageHeader
+          style={{
+            border: "1px solid rgb(235, 237, 240)",
+          }}
+          title="Posts"
+        />
+      </div>
       <div className="articles_container">
-        {posts.map((x, id) => (
+        {_.map(posts, (x, id) => (
           <Post
             key={id}
             id={x.id}
