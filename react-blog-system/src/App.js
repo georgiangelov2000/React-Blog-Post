@@ -1,16 +1,18 @@
-import './App.css';
-import CreatePost from './components/CreatePost/CreatePost'
-import Posts from './components/Posts/Posts';
-import PostDetails from './components/PostDetails/PostDetails';
-import {Route,Switch} from 'react-router-dom';
+import "./App.css";
+import CreatePost from "./components/CreatePost/CreatePost";
+import Posts from "./components/Posts/Posts";
+import PostDetails from "./components/PostDetails/PostDetails";
+import UpdatePost from "./components/UpdatePost/UpdatePost";
+import { Router } from "@reach/router";
 function App() {
   return (
     <div className="App">
-      <Switch>
-        <Route path="/" exact component={CreatePost} />
-        <Route path="/posts" component={Posts} />
-        <Route path="/post/:id" component={PostDetails} />
-      </Switch>
+      <Router>
+        <Posts path="posts " />
+        <PostDetails path="post/:id" />
+        <CreatePost path="create_post" />
+        <UpdatePost path="update_post/:id" />
+      </Router>
     </div>
   );
 }

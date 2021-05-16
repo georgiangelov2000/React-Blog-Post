@@ -1,8 +1,9 @@
 import React, { useState } from "react";
+import { navigate } from "@reach/router"
 import db from "../../firebase";
 
 
-export const CreatePost = ({ history }) => {
+export const CreatePost = () => {
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
 
@@ -28,7 +29,7 @@ export const CreatePost = ({ history }) => {
       });
     setTitle("");
     setContent("");
-    history.push("/posts");
+    navigate(`/posts`)
   };
 
   return (

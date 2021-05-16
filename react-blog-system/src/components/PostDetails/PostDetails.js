@@ -1,28 +1,28 @@
-import React,{useEffect,useState} from "react";
+import React, { useState, useEffect } from "react";
 import db from "../../firebase";
 
 const PostDetails = (props) => {
-    const [title,setTitle]=useState('');
-    const [content,setContent]=useState('');
+  const [title, setTitle] = useState("");
+  const [content, setContent] = useState("");
 
-    useEffect(() =>{
-        let postRef=db
+  useEffect(() => {
+    const postRef = db
         .collection('posts')
         .doc(props.id)
 
-        postRef
+    postRef
         .get()
-        .then(doc=>{
-            let {content,title}=doc.data;
+        .then(doc => {
+            const { content, title } = doc.data()
             setTitle(title)
             setContent(content)
         })
-    },[])
+}, [])
 
-    return (
+  return (
     <div>
       <p>Title: {title}</p>
-      <p>Content: {content}</p>
+      <p> Posts{content}</p>
     </div>
   );
 };

@@ -1,10 +1,24 @@
-import React, { useState } from "react";
+import React, { useState,useEffect } from "react";
 import db from "../../firebase";
 
 
-export const UpdatePost = ({ history }) => {
+export const UpdatePost = ( props) => {
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
+
+  useEffect(() =>{
+    let postRef=db
+    .collection('posts')
+    .doc(props.id)
+
+    postRef
+    .get()
+    .then(doc=>{
+        let {content,title}=doc.data;
+        setTitle(title)
+        setContent(content)
+    })
+},[])
 
   const onTitleChange = (event) => {
     setTitle(event.target.value);
@@ -15,23 +29,22 @@ export const UpdatePost = ({ history }) => {
   };
   const onSubmit = (e) => {
     e.preventDefault();
-    let postRef = db.collection("posts");
+    let postRef = db.collection("posts").doc(props.id);
     const postObject = { title, content };
 
     postRef
-      .add(postObject)
+      .update(postObject)
       .then((doc) => {
-        console.log("Document succesfully written!" , doc.id);
-      })
-    setTitle("");
-    setContent("");
-    history.push("/posts");
+        console.log("Document succesfully written!", doc.id);
+      }).catch((error) => {
+        console.log(error.message);
+      });
   };
 
   return (
     <div>
       <form onSubmit={onSubmit}>
-        <h1>Create Post</h1>
+        <h1>Update Post</h1>
         <input
           type="text"
           name="postTitle"
