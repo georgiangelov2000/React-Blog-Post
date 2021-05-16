@@ -10,9 +10,14 @@ const SignUp = (props) => {
   const onPasswordChange = (event) => setPassword(event.target.value);
 
   const onSignUp = () => {
-    auth.createUserWithEmailAndPassword(email, password).catch((error) => {
-      console.log(error);
-    });
+    auth
+      .createUserWithEmailAndPassword(email, password)
+      .catch(function (error) {
+        console.log("error in signup");
+
+        // NOTE: need to clear fields if there was an error
+      });
+
     setEmail("");
     setPassword("");
   };

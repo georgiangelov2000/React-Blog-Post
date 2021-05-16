@@ -1,16 +1,20 @@
 import React, { useState, useEffect } from "react";
 import db from "../../firebase";
-import { PageHeader,Card } from "antd";
+import { PageHeader, Card } from "antd";
 
 const PostDetails = (props) => {
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
 
   useEffect(() => {
-    const postRef = db.collection("posts").doc(props.id);
+    let postRef = db
+      .collection("users")
+      .doc(props.uid)
+      .collection("posts")
+      .doc(props.id);
 
     postRef.get().then((doc) => {
-      const { content, title } = doc.data();
+      let { content, title } = doc.data();
       setTitle(title);
       setContent(content);
     });

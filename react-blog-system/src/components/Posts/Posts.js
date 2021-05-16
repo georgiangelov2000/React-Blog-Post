@@ -1,28 +1,33 @@
 import React, { useState, useEffect } from "react";
 import Post from "../Post/Post";
-import { PageHeader } from 'antd';
+import { PageHeader } from "antd";
 import db from "../../firebase";
-import _ from 'lodash'
+import _ from "lodash";
 
-
-const Posts = () => {
+const Posts = (props) => {
   const [posts, setPosts] = useState([]);
 
   useEffect(() => {
-    const postsRef = db.collection("posts");
+    let userId = props?.user.uid ? props?.user.uid : props.uid;
 
-    postsRef.get().then((posts) => {
-      posts.forEach((post) => {
-        const data = post.data();
-        const { id } = post;
+    db.collection("users")
+      .doc(userId)
+      .collection("posts")
+      .onSnapshot(async (posts) => {
+        let postsData = await posts.docs.map((post) => {
+          let data = post.data();
+          let { id } = post;
 
-        let payload = {
-          id,
-          ...data,
-        };
-        setPosts((posts) => [...posts, payload]);
+          let payload = {
+            id,
+            ...data,
+          };
+
+          return payload;
+        });
+
+        setPosts(postsData);
       });
-    });
   }, []);
 
   return (
@@ -35,13 +40,16 @@ const Posts = () => {
           title="Posts"
         />
       </div>
+
       <div className="articles_container">
-        {_.map(posts, (x, id) => (
+        {_.map(posts, (article, idx) => (
           <Post
-            key={id}
-            id={x.id}
-            title={x.title}
-            content={x.content.substring(1, 1000)}
+            key={idx}
+            id={article.id}
+            title={_.capitalize(article.title)}
+            content={article.content.substring(1, 1000)}
+            user={props.user}
+            uid={props.uid}
           />
         ))}
       </div>

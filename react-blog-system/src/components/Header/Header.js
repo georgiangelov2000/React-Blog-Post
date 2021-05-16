@@ -1,43 +1,32 @@
 import React from "react";
-import { Menu } from 'antd';
+import { Menu } from "antd";
 import { Link } from "@reach/router";
 const { Item } = Menu;
 
-
-const Header = () => {
+const Header = (props) => {
   return (
-    <div className="app_main_navigation">
-      {" "}
-      <Menu mode="horizontal">
-        <Item key="posts">
-          <Link
-            to={`/posts`}
-            style={{ float: "right" }}
-          >
-            Posts
-          </Link>
-        </Item>
+    < div className="app_main_navigation" >
+            <Menu mode="horizontal">
 
-          <Item key="create_post">
-            <Link to="/create_post" style={{ float: "right" }}>
-              Create Post
-            </Link>
-          </Item>
+                <Item key="posts">
+                    <Link to={`/blogs/${props.user.uid}/posts`} style={{ float: 'right' }}>Posts</Link>
+                </Item>
 
-          <Item key="sign_up">
-            <Link to="/sign_up" style={{ float: "right" }}>
-              Sign up
-            </Link>
-          </Item>
+                {props.user &&
+                    <Item key="create_post">
+                        <Link to="/create_post" style={{ float: 'right' }}>Create Post</Link>
+                    </Item>
+                }
 
-          <Item key="sign_in">
-            <Link to="/sign_in" style={{ float: "right" }}>
-              Sign up
-            </Link>
-          </Item>
-        
-      </Menu>
-    </div>
+                {!props.user
+                    ?
+                    <Link to="/sign_in" style={{ float: 'right' }}>Sign In</Link>
+                    :
+                    <a onClick={props.onSignOut} style={{ float: 'right' }}>Sign Out</a>
+                }
+
+            </Menu>
+        </div >
   );
 };
 

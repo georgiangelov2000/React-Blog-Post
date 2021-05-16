@@ -1,6 +1,8 @@
-import React,{useState} from "react";
+import React, { useState } from "react";
 import { PageHeader, Input, Button } from "antd";
 import { auth } from "../../firebase";
+import { navigate } from "@reach/router";
+
 const SignIn = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -9,17 +11,20 @@ const SignIn = () => {
   const onPasswordChange = (event) => setPassword(event.target.value);
 
   const onSignIn = () => {
+    console.log(email, password);
+
     auth
       .signInWithEmailAndPassword(email, password)
-      .then((result) => {
+      .then(function (result) {
         console.log("user signed in");
       })
-      .catch((error) => {
-        console.log("there was an error sign in");
+      .catch(function (error) {
+        console.log("there was an error signin in");
         console.log(error);
       });
     setEmail("");
     setPassword("");
+    navigate(`/create_post`);
   };
 
   return (

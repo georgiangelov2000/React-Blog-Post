@@ -1,16 +1,20 @@
 import React from "react";
 import db from "../../firebase";
 import { Link } from "@reach/router";
-import { Card, Button } from "antd";
+import { Card } from "antd";
 
 const Post = (props) => {
-    const onDeletePost=()=>{
-        const postRef=db
-        .collection("posts")
-        .doc(props.id)
+  const onDeletePost = () => {
+    console.log("post being deleted");
+    let postRef = db
+      .collection("users")
+      .doc(props.user.uid)
+      .collection("posts")
+      .doc(props.id);
 
-        postRef.delete();
-    }
+    postRef.delete();
+  };
+
   return (
     <div className="post_snippet_container">
       <Card
@@ -20,19 +24,24 @@ const Post = (props) => {
         extra={
           <div class="post_snippet_links">
             <Link
-              to={`/post/${props.id}`}
+              to={`/blogs/${props.uid}/post/${props.id}`}
               style={{ marginRight: "15px", float: "left" }}
             >
-              Read full Article{" "}
+              Read Full Article
             </Link>
 
-            <div className="post_edit_links" style={{ float: "right" }}>
-              <Link to={`/update_post/${props.id}`}>Update Article</Link>
-            </div>
+            {props.user && (
+              <div className="post_edit_links" style={{ float: "right" }}>
+                <Link
+                  to={`/update_post/${props.id}`}
+                  style={{ marginRight: "15px" }}
+                >
+                  Edit
+                </Link>
 
-            <Button onClick={onDeletePost}>
-                Delete
-            </Button>
+                <a onClick={onDeletePost}>Delete</a>
+              </div>
+            )}
           </div>
         }
       >

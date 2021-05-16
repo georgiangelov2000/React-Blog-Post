@@ -1,44 +1,43 @@
 import React, { useState, useEffect } from "react";
-import db from "../../firebase";
-import { navigate } from "@reach/router"
+import { navigate } from "@reach/router";
 import { PageHeader, Input, Button } from "antd";
+import db from "../../firebase";
 const { TextArea } = Input;
 
-export const UpdatePost = (props) => {
+const UpdatePost = (props) => {
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
 
   useEffect(() => {
-    const postRef = db.collection("posts").doc(props.id);
+    let postRef = db
+      .collection("users")
+      .doc(props.user.uid)
+      .collection("posts")
+      .doc(props.id);
 
     postRef.get().then((doc) => {
-      const { content, title } = doc.data;
+      let { content, title } = doc.data();
       setTitle(title);
       setContent(content);
     });
   }, []);
 
-  const onTitleChange = (event) => {
-    setTitle(event.target.value);
-  };
+  const onTitleChange = (event) => setTitle(event.target.value);
+  const onContentChange = (event) => setContent(event.target.value);
 
-  const onContentChange = (event) => {
-    setContent(event.target.value);
-  };
-  const onUpdatePost = (e) => {
-    e.preventDefault();
-    const postRef = db.collection("posts").doc(props.id);
-    const postObject = { title, content };
+  const onEditPost = () => {
+    let postRef = db
+      .collection("users")
+      .doc(props.user.uid)
+      .collection("posts")
+      .doc(props.id);
+    let payload = { title, content };
 
-    postRef
-      .update(postObject)
-      .then((doc) => {
-        console.log("Document succesfully written!", doc.id);
-      })
-      .catch((error) => {
-        console.log(error.message);
-      });
-      navigate(`/posts`);
+    postRef.update(payload).then(function (doc) {
+      console.log(doc);
+    });
+
+    navigate(`/blogs/${props.user.uid}/posts`);
   };
 
   return (
@@ -78,7 +77,7 @@ export const UpdatePost = (props) => {
         </div>
 
         <div className="post_input_button">
-          <Button type="primary" size="large" onClick={onUpdatePost}>
+          <Button type="primary" size="large" onClick={onEditPost}>
             Edit Post
           </Button>
         </div>
