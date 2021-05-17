@@ -17,6 +17,7 @@ const SignIn = () => {
       .signInWithEmailAndPassword(email, password)
       .then(function (result) {
         console.log("user signed in");
+        navigate(`/create_post`);
       })
       .catch(function (error) {
         console.log("there was an error signin in");
@@ -24,7 +25,7 @@ const SignIn = () => {
       });
     setEmail("");
     setPassword("");
-    navigate(`/create_post`);
+    navigate("sign_in")
   };
 
   return (
